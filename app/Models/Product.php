@@ -9,6 +9,7 @@ class Product extends Model
 {
     use HasFactory;
     // Ayhem
+    // Nizar
 
     protected $fillable = [
         'name',
