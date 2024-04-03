@@ -57,6 +57,11 @@
     button[type="submit"]:hover {
         text-decoration: underline;
     }
+
+    .product-image {
+        max-width: 100px;
+        max-height: 100px;
+    }
 </style>
 
 <div class="container">
@@ -73,6 +78,7 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Image</th> <!-- Added -->
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
@@ -82,6 +88,13 @@
                         <tbody>
                             @foreach ($products as $product)
                                 <tr>
+                                    <td>
+                                        @if($product->image)
+                                            <img src="{{ asset($product->image) }}" alt="Product Image" class="product-image">
+                                        @else
+                                            No Image
+                                        @endif
+                                    </td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->price }}</td>

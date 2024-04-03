@@ -18,7 +18,8 @@
     }
 
     input[type="text"],
-    textarea {
+    textarea,
+    input[type="file"] { /* Added input[type="file"] */
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
@@ -40,7 +41,7 @@
 </style>
 
 <div class="form-container">
-    <form action="{{ route('products.store') }}" method="POST">
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data"> <!-- Added enctype="multipart/form-data" -->
         @csrf
 
         <div class="form-group">
@@ -56,6 +57,12 @@
         <div class="form-group">
             <label for="price">Price:</label>
             <input type="text" id="price" name="price" required>
+        </div>
+
+        <!-- Add image input field -->
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*"> <!-- accept="image/*" restricts file selection to image files -->
         </div>
 
         <!-- Other form fields -->

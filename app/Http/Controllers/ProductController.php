@@ -34,10 +34,24 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
+            'image' => 'nullable|mimes:png,jpg,jpeg,webp',
             'price' => 'required|numeric',
         ]);
+        if ($request->has('image'))  
+        {
+            $extension = $request->file('image')->getClientOriginalExtension(); 
+            $filename = time().'.'.$extension;
+            $path = 'storage/';
+            $request->file('image') -> move($path,$filename);
+        }
 
-        Product::create($validatedData);
+        Product::create([
+            'name'=>$request['name'],
+            'description'=>$request['description'],
+            'image' => $path.$filename,
+            'price'=>$request['price'],
+            'is_active'  => $request ->is_active == true ? 1:0,
+        ]);
 
         return redirect(route('products.index'))->with('success', 'Product created successfully.');
     }
@@ -58,6 +72,7 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'nullable',
             'price' => 'required|numeric',
+            'image' => 'nullable|mimes:png,jpg,jpeg,webp',
         ]);
 
         $product->update($validatedData);
