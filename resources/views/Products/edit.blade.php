@@ -34,7 +34,8 @@
     }
 
     input[type="text"],
-    textarea {
+    textarea,
+    input[type="file"] { /* Added input[type="file"] */
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
@@ -62,7 +63,7 @@
                 <div class="card-header">Edit Product</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('products.update', $product) }}">
+                    <form method="POST" action="{{ route('products.update', $product) }}" enctype="multipart/form-data"> <!-- Added enctype="multipart/form-data" -->
                         @csrf
                         @method('PUT')
 
@@ -79,6 +80,12 @@
                         <div class="form-group">
                             <label for="price">Price</label>
                             <input id="price" type="text" class="form-control" name="price" value="{{ $product->price }}" required autofocus>
+                        </div>
+
+                        <!-- Add image input field -->
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input id="image" type="file" class="form-control" name="image" accept="image/*"> <!-- accept="image/*" restricts file selection to image files -->
                         </div>
 
                         <!-- Other form fields -->
